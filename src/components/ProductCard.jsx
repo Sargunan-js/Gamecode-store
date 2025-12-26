@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
+import { useSettings } from '../contexts/SettingsContext'
+import { useCart } from '../contexts/CartContext'
 
 export default function ProductCard({ product }) {
+    const { formatPrice } = useSettings()
+    const { addToCart } = useCart()
+
     return (
         <div className="group relative bg-card-bg border border-white/5 rounded-xl overflow-hidden hover:border-electric-blue/50 transition duration-300 transform hover:-translate-y-1">
             {/* Image Container */}
@@ -39,10 +44,13 @@ export default function ProductCard({ product }) {
                 <div className="flex items-center justify-between mt-auto">
                     <div className="flex flex-col">
                         <span className="text-xs text-gray-500">Price</span>
-                        <span className="text-xl font-black text-white group-hover:text-electric-blue transition">${product.price}</span>
+                        <span className="text-xl font-black text-white group-hover:text-electric-blue transition">{formatPrice(product.price)}</span>
                     </div>
 
-                    <button className="bg-white/5 hover:bg-electric-blue hover:text-black text-white p-2 rounded-lg transition border border-white/10 group-hover:border-electric-blue/50">
+                    <button
+                        onClick={() => addToCart(product)}
+                        className="bg-white/5 hover:bg-electric-blue hover:text-black text-white p-2 rounded-lg transition border border-white/10 group-hover:border-electric-blue/50"
+                    >
                         <ShoppingCart className="w-5 h-5" />
                     </button>
                 </div>

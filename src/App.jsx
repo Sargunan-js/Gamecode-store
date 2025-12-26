@@ -11,8 +11,10 @@ import Register from './pages/Register'
 import Catalog from './pages/Catalog'
 import Dashboard from './pages/Dashboard'
 import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
 import ProductDetail from './pages/ProductDetail'
 import SellerProfile from './pages/SellerProfile'
+import Profile from './pages/Profile'
 import AdminDashboard from './pages/admin/AdminDashboard'
 
 function App() {
@@ -29,12 +31,14 @@ function App() {
                             <Route path="/register" element={<Register />} />
                             <Route path="/catalog" element={<Catalog />} />
                             <Route path="/cart" element={<Cart />} />
+                            <Route path="/checkout" element={<Checkout />} />
                             <Route path="/product/:id" element={<ProductDetail />} />
                             <Route path="/seller/:id" element={<SellerProfile />} />
 
                             {/* Protected Routes: Buyer/Seller */}
                             <Route element={<ProtectedRoute />}>
                                 <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/profile" element={<Profile />} />
                             </Route>
 
                             {/* Protected Routes: Admin */}

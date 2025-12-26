@@ -2,9 +2,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ShoppingCart, User, Menu, X, LogOut, Shield, Search } from 'lucide-react'
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthProvider'
+import { useSettings } from '../contexts/SettingsContext'
+import { useCart } from '../contexts/CartContext'
 
 export default function Navbar() {
     const { user, profile, signOut } = useAuth()
+    const { currency, setCurrency, language, setLanguage, t, currencies, languages } = useSettings()
+    const { cart } = useCart()
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -21,13 +25,13 @@ export default function Navbar() {
                     {/* Logo */}
                     <div className="flex items-center gap-8">
                         <Link to="/" className="text-2xl font-black tracking-wider text-white hover:text-electric-blue transition duration-300">
-                            STITCH<span className="text-electric-blue">.MARKET</span>
+                            DIGITAL<span className="text-electric-blue">.MARKET</span>
                         </Link>
 
                         {/* Desktop Menu */}
                         <div className="hidden md:flex items-baseline space-x-6">
-                            <Link to="/catalog" className="text-gray-300 hover:text-electric-blue transition font-medium">Browse</Link>
-                            <Link to="/sellers" className="text-gray-300 hover:text-electric-blue transition font-medium">Sellers</Link>
+                            <Link to="/catalog" className="text-gray-300 hover:text-electric-blue transition font-medium">{t('browse')}</Link>
+                            <Link to="/sellers" className="text-gray-300 hover:text-electric-blue transition font-medium">{t('sellers')}</Link>
 
                             {user && profile?.role === 'admin' && (
                                 <Link to="/admin" className="flex items-center text-red-400 hover:text-red-300 transition font-medium">
@@ -43,7 +47,7 @@ export default function Navbar() {
                             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-500" />
                             <input
                                 type="text"
-                                placeholder="Search games, software..."
+                                placeholder={t('search')}
                                 className="w-full bg-black/50 border border-white/10 rounded-full py-2 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-electric-blue focus:ring-1 focus:ring-electric-blue transition"
                             />
                         </div>
@@ -51,9 +55,23 @@ export default function Navbar() {
 
                     {/* Right Side Icons */}
                     <div className="hidden md:flex items-center gap-6">
+                        {/* Selectors */}
+                        <div className="flex items-center gap-2">
+                            <select value={currency} onChange={e => setCurrency(e.target.value)} className="bg-black/30 border border-white/10 rounded text-xs text-white p-1 outline-none">
+                                {currencies.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+                            <select value={language} onChange={e => setLanguage(e.target.value)} className="bg-black/30 border border-white/10 rounded text-xs text-white p-1 outline-none uppercase">
+                                {languages.map(l => <option key={l} value={l}>{l}</option>)}
+                            </select>
+                        </div>
+
                         <Link to="/cart" className="relative group">
                             <ShoppingCart className="w-6 h-6 text-gray-300 group-hover:text-electric-blue transition" />
-                            <span className="absolute -top-2 -right-2 bg-electric-blue text-black text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                            {cart.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-electric-blue text-black text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                                    {cart.length}
+                                </span>
+                            )}
                         </Link>
 
                         {user ? (
@@ -77,19 +95,19 @@ export default function Navbar() {
                                         <p className="text-sm text-white font-bold">Signed in as</p>
                                         <p className="text-sm text-gray-400 truncate">{user.email}</p>
                                     </div>
-                                    <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-electric-blue transition">Dashboard</Link>
-                                    <Link to="/profile" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-electric-blue transition">My Profile</Link>
+                                    <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-electric-blue transition">{t('dashboard')}</Link>
+                                    <Link to="/profile" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-electric-blue transition">{t('profile')}</Link>
                                     <div className="border-t border-white/5 my-1"></div>
                                     <button onClick={handleSignOut} className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-white/5 flex items-center gap-2 transition">
-                                        <LogOut className="w-4 h-4" /> Sign Out
+                                        <LogOut className="w-4 h-4" /> {t('logout')}
                                     </button>
                                 </div>
                             </div>
                         ) : (
                             <div className="flex gap-4 items-center">
-                                <Link to="/login" className="text-sm font-bold text-gray-300 hover:text-white transition">Log In</Link>
+                                <Link to="/login" className="text-sm font-bold text-gray-300 hover:text-white transition">{t('login')}</Link>
                                 <Link to="/register" className="px-5 py-2.5 text-sm font-bold bg-white text-black rounded-full hover:bg-electric-blue hover:scale-105 transition duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-                                    Sign Up
+                                    {t('signup')}
                                 </Link>
                             </div>
                         )}
