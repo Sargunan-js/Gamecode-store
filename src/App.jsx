@@ -11,6 +11,8 @@ import Register from './pages/Register'
 import Catalog from './pages/Catalog'
 import Dashboard from './pages/Dashboard'
 import Cart from './pages/Cart'
+import ProductDetail from './pages/ProductDetail'
+import SellerProfile from './pages/SellerProfile'
 import AdminDashboard from './pages/admin/AdminDashboard'
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
                             <Route path="/register" element={<Register />} />
                             <Route path="/catalog" element={<Catalog />} />
                             <Route path="/cart" element={<Cart />} />
+                            <Route path="/product/:id" element={<ProductDetail />} />
+                            <Route path="/seller/:id" element={<SellerProfile />} />
 
                             {/* Protected Routes: Buyer/Seller */}
                             <Route element={<ProtectedRoute />}>

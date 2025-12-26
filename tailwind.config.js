@@ -7,13 +7,15 @@ export default {
     theme: {
         extend: {
             colors: {
-                background: '#0a0a0a',
-                surface: '#121212',
-                primary: '#3b82f6', // Neon Blue-ish
-                secondary: '#8b5cf6', // Purple
-                accent: '#f43f5e', // Red/Pink accent
-                'neon-blue': '#00f3ff',
-                'neon-purple': '#bc13fe',
+                background: '#0a0a0a',   // Deep Black
+                surface: '#18181b',      // Dark Gray
+                primary: '#2563eb',      // Standard Blue
+                secondary: '#9333ea',    // Purple
+
+                // Stitch Design Specifics
+                'electric-blue': '#00F0FF', // The vibrant cyan/blue from the design
+                'deep-bg': '#050505',       // Darker background
+                'card-bg': '#121212',       // Slightly lighter card bg
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
